@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<title>
+Centralized Credit History and Loan Monitoring System - Aakansh Nahadiya
+</title>
+</head>
+<body>
+<h1>Your welcome here.</h1>
+<p>
+Below you can search the customers details and their records by their ID.<br>
+To protect individual's privacy, the PAN number, account number, and phone number will be hidden.
+</p>
+<form id="search-form">
+<label for="cr-id">Please enter customer id between 5001 to 6000</label><br>
+<input type="text" id="cr-id" name="Customer ID" required><br>
+<input type="submit" value="Submit">
+</form>
+<div id="result"></div>
+<p>It is recommended to read the project documentation to know more about the project</p>
+<a href="about.html">Go to project documentation</a>
+<script>
+document.getElementById("search-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const customerId = document.getElementById("cr-id").value.trim();
+  const resultDiv = document.getElementById("result");
+
+  if (!customerId) {
+    resultDiv.innerHTML = "<p>Please enter a customer ID.</p>";
+    return;
+  }
+
+  resultDiv.innerHTML = "<p>Loading...</p>";
+
+  fetch("https://credit-history-api.aakanshnahadiya26.workers.dev/?id=" + customerId)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      if (data.error) {
+        resultDiv.innerHTML = "<p>" + data.error + "</p>";
+        return;
+      }
+
+      let html = "<h2>Search Results</h2>";
+      html += "<table border='1'>";
+      html += "<tr><th>Full Name</th><th>Gender</th><th>City</th><th>KYC Status</th><th>Bank Name</th><th>Bank Type</th><th>Loan Type</th><th>Loan Amount</th><th>Loan Date</th><th>Missed Payments</th><th>Due Amount</th><th>Payment Status</th><th>Credit Score</th></tr>";
+
+      data.forEach(function(record) {
+        html += "<tr>";
+        html += "<td>" + record.customers.full_name + "</td>";
+        html += "<td>" + record.customers.gender + "</td>";
+        html += "<td>" + record.customers.city + "</td>";
+        html += "<td>" + record.customers.kyc_status + "</td>";
+        html += "<td>" + record.banks.bank_name + "</td>";
+        html += "<td>" + record.banks.bank_type + "</td>";
+        html += "<td>" + record.loan_type + "</td>";
+        html += "<td>" + record.loan_amount + "</td>";
+        html += "<td>" + record.loan_date + "</td>";
+        html += "<td>" + record.missed_payments + "</td>";
+        html += "<td>" + record.due_amount + "</td>";
+        html += "<td>" + record.payment_status + "</td>";
+        html += "<td>" + record.credit_score + "</td>";
+        html += "</tr>";
+      });
+
+      html += "</table>";
+      resultDiv.innerHTML = html;
+    })
+    .catch(function(error) {
+      resultDiv.innerHTML = "<p>Something went wrong. Please try again.</p>";
+    });
+});
+</script>
+</body>
+</html>

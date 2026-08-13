@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<title>
+Project documentation - Aakansh Nahadiya
+</title>
+</head>
+<body>
+<h1>About the Project:</h1>
+<p>For my COPA course assessment, I have given the topic of credit history and loan record management. In this project, I built a relational database with three tables: Banks, Customers, and Credit Records. These tables store and connect data with each other using SQL.</p>
+<p>The project focuses on credit history management, not complete banking operations. It gives a centralized view of customer loans, payment records, due amounts, and credit status.</p>
+<h2>Problem Statement:</h2>
+<p>In real life, customers often have accounts and loans in different banks, and tracking all those records separately is difficult. A centralized system is needed where customer details, bank details, and loan information are stored in one place. This is exactly what this project does.<br>
+Whether a loan is active, closed, overdue, or defaulted, everything is available in one place, making it easy to find out which customer has taken what kind of loan, from which bank, and what the current repayment status is.</p>
+<h2>Database Design:</h2>
+<p>The project consists of three main tables:</p>
+<ul>
+<li>Banks. Stores information about 20 Indian banks</li>
+<li>Customers. Stores personal information of 1000 customers</li>
+<li>Credit Records. Stores loan records, 3645 entries in total</li>
+</ul>
+<h2>Relationship Structure</h2>
+<p>Banks and Customers are not directly connected to each other. Credit Records acts as a bridge table between them.<br>
+For example, Customer A may have a loan from SBI, another loan from HDFC, and another from ICICI. So one customer can have multiple loan records. Similarly, one bank can issue loans to many different customers. This creates a One-to-Many relationship on both sides.</p>
+<h3>Scoring System:</h3>
+<p>In real life, banks and companies do not disclose how they calculate credit scores, and the actual formula is very complicated.<br>
+In this project, I have used a simplified but logical model.<br>
+Every customer starts with a default credit score of 1000, which represents a perfect repayment history with no missed payments. For every missed EMI payment, 20 points are deducted. The formula is:<br>
+Credit Score = 1000 − (Missed Payments × 20)<br>
+Since the database does not store EMI duration or installment amount, due amount is calculated using an estimated penalty model. Each missed payment carries a penalty equal to 2 percent of the total loan amount. The formula is:<br>
+Due Amount = Loan Amount × 0.02 × Missed Payments<br>
+Payment status is decided based on the number of missed payments:</p>
+<ul>
+<li>Closed. loan is fully repaid, due amount is zero</li>
+<li>Active. missed payments between 0 and 5</li>
+<li>Overdue. missed payments between 6 and 10</li>
+<li>Defaulted. missed payments more than 10</li>
+</ul>
+<h2>Challenges:</h2>
+<p>When a customer takes a loan from a bank, a PAN card and at least one bank account are required. But in real life, PAN numbers, bank account numbers, and phone numbers are confidential. In this project, all of these were generated randomly for demo purposes.</p>
+<p>Another challenge was that writing thousands of customer records and credit history entries manually was not possible within the time available. That is why I used AI tools to assist with data generation.</p>
+<h2>Creating Reports from This Project:</h2>
+<p>In a relational database, a JOIN query is used to combine data from multiple tables and display it in a single result. Using JOIN queries on this database, the following types of reports can be generated:
+<ul>
+<li>How many loans a customer has, searched by PAN number</li>
+<li>How many missed payments a customer has</li>
+<li>List of loans above a certain amount, such as above 500,000 rupees</li>
+<li>How many education loans are active in the database</li>
+<li>How many female customers have taken loans and how many have completed repayment</li>
+<li>Maximum and minimum loan amounts across all records</li>
+<li>From which cities customers have taken the most loans</li>
+<li>Which bank has provided the highest total loan amount</li>
+</ul>
+<p>These are just some examples.</p>
+<h2>Tools I have Used:</h2>
+<p>The following tools were used to build this project in an accessible way:
+<ul>
+<li>VS Code. used as a command line code editor</li>
+<li>PostgreSQL. the main database application for creating and managing the database</li>
+<li>Microsoft PostgreSQL Extension in VS Code. acts as a bridge between VS Code and PostgreSQL, making it accessible without a graphical interface</li>
+<li>Claude and ChatGPT. used for AI assistance during development and data generation</li>
+</ul>
+<h2> Depploing the project:</h2>
+<p>The project has been deployed using the following ways.</p>
+<ul>
+<li>The project public address should be accessible from the custom domain that I have</li>
+<li>GitHub is used to store the repository of this project</li>
+<li>This repository is connected with Cloudflare, so changes can be deployed automatically when changes are made to the repository.</li>
+<li>The database is stored in Supabase and connected to Cloudflare using an API key</li>
+<li>Custom reports can not be generated here</li>
+</ul>
+<p>The result will be shown in the format of tables. Also, sensitive information such as PAN numbers, bank account numbers, and phone numbers will be hidden from the result.</p>
+<h2>References:</h2>
+<a href="https://www.w3schools.com/postgresql/index.php">Introduction to PostgreSQL from W3School </a><br>
+<a href="https://marketplace.visualstudio.com/items?itemName=ms-ossdata.vscode-pgsql"> Microsoft PG SQL extension on visual studio code</a><br>
+<a href="https://learn.microsoft.com/en-us/azure/postgresql/development/vs-code-extension/postgresql-extension-overview"> Overview of Microsoft  PostgreSQL</a><br>
+</body>
+</html>
